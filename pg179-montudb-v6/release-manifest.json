@@ -1,0 +1,106 @@
+{
+  "product": "MontuDB",
+  "version": "6.0",
+  "package_name": "montudb-pg17.9",
+  "based_on": "PostgreSQL 17.9",
+  "version_string": "PostgreSQL 17.9 (MontuDB 6.0)",
+  "server_version_num": 170009,
+  "release_type": "production (optimized -O2, assertions off, stripped)",
+  "install_prefix": "/opt/montudb/6.0-pg17.9",
+  "service": "montudb-6.0-pg17.9.service",
+  "system_user": "montudb",
+  "suggested_data_dir": "/var/lib/montudb/6.0-pg17.9/data",
+  "suggested_port": 55432,
+  "release_date": "2026-08-05",
+  "source_commit": "bfa4cc6e (montu/v6-pg17.9)",
+  "build": {
+    "configure_flags": "--prefix=/opt/montudb/6.0-pg17.9 --enable-depend --with-extra-version=' (MontuDB 6.0)' CFLAGS=-O2",
+    "note": "every artifact compiled natively on its own architecture - no emulation: arm64 on aarch64, amd64 on x86_64. The amd64 .deb is file-packed on the arm64 host (dpkg-deb is architecture-neutral file packing); its payload is the natively compiled amd64 tree, and it is installed and validated on native amd64."
+  },
+  "coexistence": {
+    "note": "packaged under its own package name so it installs side by side with the PostgreSQL 17.2 line (package 'montudb', prefix /opt/montudb/6.0). Distinct prefix, systemd unit, sbin helpers, data dir and doc dir; the 'montudb' system user is deliberately shared and created idempotently by both.",
+    "verified": "both runtime .deb packages installed together in one clean container - no file conflict, both banners resolve"
+  },
+  "montu_optimizer": {
+    "line": "V6 MBBM (Multi-pass Bloom Bucket Merge) on top of V5 BloomHash, V4 Compose, Condense, OLAP/MRRV and RealCost",
+    "montu_gucs": 109,
+    "mbbm_gucs": 22,
+    "mbbm_default": "off",
+    "note": "default-OFF; zero catalog change vs the 5.0 line"
+  },
+  "artifact_count": 8,
+  "artifacts": [
+    {
+      "name": "montudb-pg17.9_6.0-1_amd64.deb",
+      "architecture": "amd64",
+      "format": "deb",
+      "size_bytes": 5272904,
+      "sha256": "1ce7f8065bcae753fee7fe9be1bf50f7f612ba96c9b08282f9c09697360aa9a0",
+      "install_command": "sudo apt-get install ./montudb-pg17.9_6.0-1_amd64.deb",
+      "validation_status": "validated full functional on native amd64 hardware: apt-get install (postinst executed - montudb user/group, data dir, sbin helpers, systemd unit), initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-pg17.9_6.0-1_arm64.deb",
+      "architecture": "arm64",
+      "format": "deb",
+      "size_bytes": 4766372,
+      "sha256": "4eae1718df297d334edfcf8c3f3aebc49e26a72e0c6260a3a047c8436ca31659",
+      "install_command": "sudo apt-get install ./montudb-pg17.9_6.0-1_arm64.deb",
+      "validation_status": "validated full functional on native arm64 hardware: apt-get install (postinst executed - montudb user/group, data dir, sbin helpers, systemd unit), initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-pg17.9-6.0-1.x86_64.rpm",
+      "architecture": "x86_64",
+      "format": "rpm",
+      "size_bytes": 5656774,
+      "sha256": "08c0a3c82cba2d6ccbf6c0367a9414d77f33dbb092f060118dc3379c23dc17bd",
+      "install_command": "sudo dnf install ./montudb-pg17.9-6.0-1.x86_64.rpm",
+      "validation_status": "validated full functional on native x86_64 hardware: dnf install (%pre/%post scriptlets executed - montudb user/group, data dir, sbin helpers, systemd unit), initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-pg17.9-6.0-1.aarch64.rpm",
+      "architecture": "aarch64",
+      "format": "rpm",
+      "size_bytes": 5558023,
+      "sha256": "65304221d2538f023aa099d229d74d3901010b65f0dce407b363bfb16b1fcfb9",
+      "install_command": "sudo dnf install ./montudb-pg17.9-6.0-1.aarch64.rpm",
+      "validation_status": "validated full functional on native aarch64 hardware: dnf install (%pre/%post scriptlets executed - montudb user/group, data dir, sbin helpers, systemd unit), initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-6.0-pg17.9-linux-amd64.tar.gz",
+      "architecture": "amd64",
+      "format": "tarball",
+      "size_bytes": 8218253,
+      "sha256": "b346741df764195e6a8dbe96651baf86ee4cf8487fea21d7cbb95737794ed631",
+      "install_command": "sudo tar -xzf montudb-6.0-pg17.9-linux-amd64.tar.gz -C /opt   # then /opt/montudb-6.0-pg17.9/bin/psql --version",
+      "validation_status": "validated full functional on native amd64 hardware: extracted to /opt and run in place ($ORIGIN-relative RUNPATH resolved), initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-6.0-pg17.9-linux-arm64.tar.gz",
+      "architecture": "arm64",
+      "format": "tarball",
+      "size_bytes": 8019923,
+      "sha256": "c1629b8e2bd0fc8acade734dbb1ac03fa1e551e4e9d6a0497ba19f4b910b5f45",
+      "install_command": "sudo tar -xzf montudb-6.0-pg17.9-linux-arm64.tar.gz -C /opt   # then /opt/montudb-6.0-pg17.9/bin/psql --version",
+      "validation_status": "validated full functional on native arm64 hardware: extracted to /opt and run in place ($ORIGIN-relative RUNPATH resolved), initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-6.0-pg17.9-docker-amd64.tar",
+      "architecture": "amd64",
+      "format": "docker",
+      "size_bytes": 52353536,
+      "sha256": "6bc3e13495dbe066f68b3aa67dbf7c676a0d84e15c0d1bf2205a641836cf3544",
+      "install_command": "docker load -i montudb-6.0-pg17.9-docker-amd64.tar   # tags montudb:6.0-pg17.9-amd64",
+      "validation_status": "validated full functional on native amd64 hardware: image loaded and run, entrypoint initialized and started the cluster, initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    },
+    {
+      "name": "montudb-6.0-pg17.9-docker-arm64.tar",
+      "architecture": "arm64",
+      "format": "docker",
+      "size_bytes": 52002816,
+      "sha256": "5cc79ab5f967f510d7c15c5a3e096b8c8ebba5966dc2ff85d6e0c2c9cc8cf625",
+      "install_command": "docker load -i montudb-6.0-pg17.9-docker-arm64.tar   # tags montudb:6.0-pg17.9-arm64",
+      "validation_status": "validated full functional on native arm64 hardware: image loaded and run, entrypoint initialized and started the cluster, initdb, server start, postgres/psql --version, SHOW server_version=17.9 (MontuDB 6.0), server_version_num=170009, debug_assertions=off, SELECT version()"
+    }
+  ]
+}
